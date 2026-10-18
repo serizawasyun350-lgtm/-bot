@@ -75,7 +75,7 @@ class SlotPanelView(discord.ui.View):
       msg = '😢 残念！ハズレです…もう一度挑戦してね！'
 
     embed = discord.Embed(
-        title='🎰 まるちき鯖 スロットパネル',
+        title='🎰 スロットパネルを設置しました！',
         description=(
             f'```\n{panel_display}\n```\n{msg}\n\n'
             'もう一度回す場合は下のボタンを押してね！'
@@ -115,7 +115,7 @@ class GachaView(discord.ui.View):
     rewards = {
         'SSR': ('💎 伝説のまるもねソード', 100000),
         'SR': ('⚔️ 鋼鉄のつるぎ', 10000),
-        'R': ('🛡️ 木のたte', 1000),
+        'R': ('🛡️ 木のたて', 1000),
         'N': ('🧹 ただのほうき', 100),
     }
 
@@ -179,7 +179,7 @@ class KujibikiView(discord.ui.View):
 async def slot(interaction: discord.Interaction):
   view = SlotPanelView()
   embed = discord.Embed(
-      title='🎰 スロットを作成しました！',
+      title='🎰 スロットパネルを設置しました！',
       description=(
           '【配当表】\n'
           '7️⃣ 7️⃣ 7️⃣ : **100,000 まるもね**\n'
@@ -189,7 +189,7 @@ async def slot(interaction: discord.Interaction):
       ),
       color=discord.Color.gold(),
   )
-  # ephemeral=True を指定して自分だけに表示されるように設定
+  # 自分だけに表示
   await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 
