@@ -42,7 +42,7 @@ async def on_ready():
     print(f'同期エラーが発生しました: {e}')
 
 
-# --- 3. ボタン式スロットパネル (上書き更新対応) ---
+# --- 3. ボタン式スロットパネル (自分だけに表示 & 上書き更新対応) ---
 class SlotPanelView(discord.ui.View):
 
   def __init__(self):
@@ -83,7 +83,7 @@ class SlotPanelView(discord.ui.View):
         color=discord.Color.gold(),
     )
 
-    # response.edit_message で直前のメッセージを直接上書き更新します
+    # 直前のメッセージをそのまま上書き更新
     await interaction.response.edit_message(embed=embed, view=self)
 
 
@@ -115,7 +115,7 @@ class GachaView(discord.ui.View):
     rewards = {
         'SSR': ('💎 伝説のまるもねソード', 100000),
         'SR': ('⚔️ 鋼鉄のつるぎ', 10000),
-        'R': ('🛡️ 木のたて', 1000),
+        'R': ('🛡️ 木のたte', 1000),
         'N': ('🧹 ただのほうき', 100),
     }
 
@@ -131,7 +131,6 @@ class GachaView(discord.ui.View):
         color=discord.Color.blue(),
     )
 
-    # response.edit_message で直前のメッセージを直接上書き更新します
     await interaction.response.edit_message(embed=embed, view=self)
 
 
@@ -170,7 +169,6 @@ class KujibikiView(discord.ui.View):
         color=discord.Color.green(),
     )
 
-    # response.edit_message で直前のメッセージを直接上書き更新します
     await interaction.response.edit_message(embed=embed, view=self)
 
 
@@ -181,17 +179,18 @@ class KujibikiView(discord.ui.View):
 async def slot(interaction: discord.Interaction):
   view = SlotPanelView()
   embed = discord.Embed(
-      title='🎰 まるちき鯖 スロットパネル',
+      title='🎰 スロットを作成しました！',
       description=(
           '【配当表】\n'
           '7️⃣ 7️⃣ 7️⃣ : **100,000 まるもね**\n'
           '💎 💎 💎 : **50,000 まるもね**\n'
           '2つ一致 : **5,000 まるもね**\n\n'
-          '下のボタンを押してパネルを回してね！'
+          '下の「🎰 パネルを回す！」ボタンを押してスタートしてね！'
       ),
       color=discord.Color.gold(),
   )
-  await interaction.response.send_message(embed=embed, view=view)
+  # ephemeral=True を指定して自分だけに表示されるように設定
+  await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 
 @bot.tree.command(name='gacha', description='ボタンを押して装備ガチャを引きます！')
@@ -202,7 +201,7 @@ async def gacha(interaction: discord.Interaction):
       description='下のボタンを押してガチャを引いてね！',
       color=discord.Color.blue(),
   )
-  await interaction.response.send_message(embed=embed, view=view)
+  await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 
 @bot.tree.command(name='kujibiki', description='ボタンを押してくじ引きをします！')
@@ -213,7 +212,7 @@ async def kujibiki(interaction: discord.Interaction):
       description='下のボタンを押して運試しをしよう！',
       color=discord.Color.green(),
   )
-  await interaction.response.send_message(embed=embed, view=view)
+  await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 
 @bot.tree.command(
